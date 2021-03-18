@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add a question</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="/scripts.js" defer></script>
+
+</head>
+<body class="bg-primary">
+    <div class="container py-5">
+
+        <!-- For demo purpose -->
+        <header class="text-white text-center">
+            <h1 class="display-4">Add a memory question</h1>
+            <p class="lead mb-0">Add a memory question to this photo e.g Do you remember where this was taken?</p>
+        </header>
+                <!-- Uploaded image area-->
+                <div class="image-area mt-4"><img id="imageResult" src="/<%= imgId %>/image" alt="" class="img-fluid rounded shadow-sm mx-auto d-block w-25 h-25" >
+
+                </div>
+                <form method="POST" action="/submitQuestion" class="py-4">
+                    <div class="input-group row mx-auto pt-4">
+
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="basic-addon1">Question</span>
+                        </div>
+                        <input type="text" name="question" class="form-control" placeholder="Who is in this photo?" aria-label="Question" aria-describedby="basic-addon1">
+    
+                        <div class="input-group-prepend pl-2">
+                            <span class="input-group-text" id="basic-addon1">Answer</span>
+                        </div>
+                        <input type="text" name="answer" class="form-control" placeholder="Jane Smith" aria-label="Answer" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group row mx-auto pt-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Hint</span>
+                        </div>
+                        <input type="text" name="hint" class="form-control" placeholder="We were on holiday in Spain" aria-label="Hint" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="col text-center pt-3">
+                    <button type="submit" id="btnSave" class="btn btn-light btn-lg row mx-auto text-primary" >Save</button>
+                    <input type="hidden" id="id" name="questionId" value="<%= imgId %>">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

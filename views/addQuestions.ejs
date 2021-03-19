@@ -23,18 +23,35 @@
 
                 </div>
                 <form method="POST" action="/submitQuestion" class="py-4">
+                    <p class="lead mb-0 text-center text-white pt-4">Enter your question about the photo</p>
                     <div class="input-group row mx-auto pt-4">
-
                         <div class="input-group-prepend">
                           <span class="input-group-text" id="basic-addon1">Question</span>
                         </div>
                         <input type="text" name="question" class="form-control" placeholder="Who is in this photo?" aria-label="Question" aria-describedby="basic-addon1">
-    
-                        <div class="input-group-prepend pl-2">
-                            <span class="input-group-text" id="basic-addon1">Answer</span>
-                        </div>
-                        <input type="text" name="answer" class="form-control" placeholder="Jane Smith" aria-label="Answer" aria-describedby="basic-addon1">
+
                     </div>
+                    <p class="lead mb-0 text-center text-white pt-4">Enter two wrong answers and one correct answer. Tick the box underneath the correct answer</p>
+                    <div class="input-group row mx-auto pt-4">
+                        <div class="input-group-prepend pl-2">
+                            <span class="input-group-text" id="basic-addon1">Answer A</span>
+                        </div>
+                        <input type="text" name="answerA" class="form-control" placeholder="Jane Smith" aria-label="Answer" aria-describedby="basic-addon1">
+                        <div class="input-group-prepend pl-2">
+                            <span class="input-group-text" id="basic-addon1">Answer B</span>
+                        </div>
+                        <input type="text" name="answerB" class="form-control" placeholder="Jane Smith" aria-label="Answer" aria-describedby="basic-addon1">
+                        <div class="input-group-prepend pl-2">
+                            <span class="input-group-text" id="basic-addon1">Answer C</span>
+                        </div>
+                        <input type="text" name="answerC" class="form-control" placeholder="Jane Smith" aria-label="Answer" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group row mx-auto pt-4">
+                        <input type="checkbox" name="answerAIsCorrect" class="form-control" aria-label="Answer" aria-describedby="basic-addon1">
+                        <input type="checkbox" name="answerBIsCorrect" class="form-control" aria-label="Answer" aria-describedby="basic-addon1">
+                        <input type="checkbox" name="answerCIsCorrect" class="form-control" aria-label="Answer" aria-describedby="basic-addon1">
+                    </div>
+                    <p class="lead mb-0 text-center text-white pt-6">Enter a hint to help the player answer the question</p>
                     <div class="input-group row mx-auto pt-2">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">Hint</span>

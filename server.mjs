@@ -20,13 +20,28 @@ const upload = multer({
     //     cb(undefined, true)
     // }
     })
-const questionSchema = new mongoose.Schema({
+    const questionSchema = new mongoose.Schema({
         time: Date,
         destUserID: String,
         imgPath: String, 
-        question: String,
-        answer: String,
-        hint: String,
+        question: {
+            question: String,
+            hint: String,
+            answerA:{
+                text: String,
+                isCorrect: Boolean
+            },
+            answerB:{
+                text: String,
+                isCorrect: Boolean
+            },
+            answerC:{
+                text: String,
+                isCorrect: Boolean
+            },
+            answered : Number,
+            answeredCorrectly: Number
+        }
     })
 const Question = mongoose.model('Question', questionSchema)
 mongoose.set('useFindAndModify', false);
@@ -69,24 +84,50 @@ app.get('/addQuestions', async (req, res) => {
     res.render('addQuestions.ejs', {imgId : req.query.id})
 }) 
 app.post('/submitQuestion', async (req, res) => {
-        Question.findByIdAndUpdate(
-            // the id of the Question
-            req.body.questionId,
-            
-            // Update changes from body of the post request
-            req.body,
-            
-            // return updated version
-            {new: true},
-            
-            // the callback function
-            (err, todo) => {
-            // Handle any possible database errors
-                if (err) return res.status(500).send(err);
-                return res.send(todo);
-            }
-        )
+    var query = {
+        question: {
+            question: String,
+            hint: String,
+            answerA:{
+                text: String,
+                isCorrect: Boolean
+            },
+            answerB:{
+                text: String,
+                isCorrect: Boolean
+            },
+            answerC:{
+                text: String,
+                isCorrect: Boolean
+            },
+        }
+    }
+    query.question.question = req.body.question
+    query.question.answerA.text = req.body.answerA
+    query.question.answerA.isCorrect = req.body.answerAIsCorrect == true
+    query.question.answerB.text = req.body.answerB
+    query.question.answerB.isCorrect = req.body.answerBIsCorrect == true
+    query.question.answerC.text = req.body.answerC
+    query.question.answerC.isCorrect = req.body.answerCIsCorrect == true
+    query.question.hint = req.body.hint
+    query.question.answered = 0
+    query.question.answeredCorrectly = 0
 
+
+    Question.findOneAndUpdate(req.body.questionId, query, {upsert: true}, function(err, doc) {
+        if (err) return res.send(500, {error: err});
+        //return res.send('Succesfully saved.');
+    });
+    var results = {};
+    await Question.find({}, function(err, questions) {
+    
+        questions.forEach(function(question) {
+          results[question._id] = question;
+        });
+        console.log(results)
+        
+        res.render('dashboard.ejs', {data: results} );  
+      });
 })
 
 app.get('/dashboard', async (req, res) => { 

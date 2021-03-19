@@ -10,14 +10,31 @@
 
 </head>
 <body class="bg-primary">
+
     <div class="container py-5">
+      <button type="submit" id="addQuestion" class="btn btn-light btn-lg row mx-auto text-primary" onclick="window.location.href='/upload'" style="float: right" >Add a question</button>
 
         <!-- For demo purpose -->
         <header class="text-white text-center">
             <h1 class="display-4">Dashboard</h1>
         </header>        
 
-        <div class="container col-lg-6 mx-auto">
+        <div class="container col-lg-10 mx-auto">
+
+          <div class="row mt-3 bg-light rounded d-flex flex-wrap align-items-center">
+            <div class="col-sm">
+              <p>Image</p>
+            </div>
+            <div class="col-sm">
+              Question
+            </div>
+            <div class="col-sm">
+              Number of times question has been answered
+            </div>
+            <div class="col-sm">
+              Number of correct answers
+            </div>
+          </div>
             <% console.log(Object.keys(data)) %> 
             <%  Object.keys(data).forEach(function (key) { %>
             <div class="row mt-3 bg-light rounded d-flex flex-wrap align-items-center">
@@ -25,11 +42,15 @@
                 <img src="/<%= key %>/image" alt="image" class="img-thumbnail m-20 w-50 h-75 " style="margin: 5px;">
               </div>
               <div class="col-sm">
-                <%= data[key].question %>
+                <%= data[key].question.question %>
               </div>
               <div class="col-sm">
-                <%= data[key].answer %>
+                <%= data[key].question.answered %>
               </div>
+              <div class="col-sm">
+                <%= data[key].question.answeredCorrectly %>
+              </div>
+
             </div>
             <% }) %>
           </div>

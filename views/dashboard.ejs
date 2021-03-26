@@ -7,18 +7,64 @@
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="/scripts.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+      var selectedID = ''
+      $('#btnAddMessage').on('shown.bs.modal', function() {
+        $('#myInput').focus()
+      })
+      function addMessage(qID)
+      {
+        selectedID = qID
+      }
+      function sendMessage()
+      {
+        var message = document.getElementById("txtMessage").value
+        var url = '/modifyQuestion/'  + selectedID + '/' + message 
+        console.log(url)
+        fetch(url)
 
+      }
+
+
+      
+    </script>
 </head>
 <body class="bg-primary">
 
     <div class="container py-5">
       <button type="submit" id="addQuestion" class="btn btn-light btn-lg row mx-auto text-primary" onclick="window.location.href='/upload'" style="float: right" >Add a question</button>
-
-        <!-- For demo purpose -->
         <header class="text-white text-center">
             <h1 class="display-4">Dashboard</h1>
         </header>        
+<!-- Trigger the modal with a button -->
 
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Enter a message to add to the question</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1" class="py-2 px-2">Message</label>
+        <textarea class="form-control" id='txtMessage' rows="3"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default " data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="btnSend" onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+    
+  </div>
+</div>
         <div class="container col-lg-10 mx-auto">
 
           <div class="row mt-3 bg-light rounded d-flex flex-wrap align-items-center">
@@ -33,6 +79,9 @@
             </div>
             <div class="col-sm">
               Number of correct answers
+            </div>
+            <div class="col-sm">
+              Add a message
             </div>
           </div>
             <% console.log(Object.keys(data)) %> 
@@ -50,10 +99,13 @@
               <div class="col-sm">
                 <%= data[key].question.answeredCorrectly %>
               </div>
-
+              <div class="col-sm">
+                <button type="button" id="btnAddMessage" class="py-4 btn btn-light btn-lg mx-auto" data-toggle="modal" data-target="#myModal" onclick="addMessage('<%- key %>')" >Add message </button>
+              </div>
             </div>
             <% }) %>
           </div>
+          
     </div>
 </body>
 </html>

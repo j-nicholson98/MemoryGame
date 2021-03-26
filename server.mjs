@@ -69,7 +69,7 @@ await mongoose.connect('mongodb://localhost:27017/image', {
 //Tell the app that we want to parse our view files useing EJS
 app.set('view engine', 'ejs')
 
-//app.use(express.static(currentFolder + '/public'));
+app.use(express.static(currentFolder + '/public'));
 //Tell our app where the css and js files required to use bootstrap are located
 app.use('/css', express.static(path.join(currentFolder, 'node_modules/bootstrap/dist/css')))
 app.use('/js', express.static(path.join(currentFolder, 'node_modules/bootstrap/dist/js')))
@@ -186,7 +186,7 @@ app.get('/dashboard', async (req, res) => {
         res.render('dashboard.ejs', {data: results} );  
       });
 })
-
+// Tell the server to return a list of all the questions when the /questions url is requested
 app.get('/questions', async (req, res) => { 
     var results = {};
     await Question.find({}, function(err, questions) {
@@ -196,10 +196,8 @@ app.get('/questions', async (req, res) => {
         });        
         res.send(results);  
       });
-    //res.render('dashboard.ejs')
-
 })
-
+// This allows the client to request any image from the server using the specified syntax
 app.get('/:id/image', async (req, res) => {
 
     try{
@@ -214,6 +212,7 @@ app.get('/:id/image', async (req, res) => {
         res.status(404).send()
     }
 })
+// This allows the client to tell the server that a question was answered correctly
 app.get('/answeredQuestion/:id/:answeredCorrectly', async (req, res) => {
     try{
         var result = await Question.findById(req.params.id)
@@ -239,6 +238,7 @@ app.get('/answeredQuestion/:id/:answeredCorrectly', async (req, res) => {
         res.status(404).send()
     }
 })
+// This allows the client to add messages to questions
 app.get('/modifyQuestion/:id/:message', async (req, res) => {
     try{
         var result = await Question.findById(req.params.id)
